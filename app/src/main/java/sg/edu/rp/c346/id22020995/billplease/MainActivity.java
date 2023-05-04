@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvPax;
     TextView tvDiscount;
     TextView tvTotalBill;
-    TextView tvEachPays;
+    TextView tvSplitCost;
 
     //EditText Variables
     EditText etBillInput;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //TextView
         tvAmount = findViewById(R.id.textViewAmount);
         tvDiscount = findViewById(R.id.textViewDiscount);
-        tvEachPays = findViewById(R.id.textViewEachPays);
+        tvSplitCost = findViewById(R.id.textViewSplitCost);
         tvPax = findViewById(R.id.textViewPax);
         tvTotalBill = findViewById(R.id.textViewTotalBill);
         //EditText
@@ -56,5 +56,35 @@ public class MainActivity extends AppCompatActivity {
         //Buttons
         btnReset = findViewById(R.id.buttonReset);
         btnSplit = findViewById(R.id.buttonSplit);
+
+        btnSplit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Take bill input and display total bill
+                String billInput = etBillInput.getText().toString();
+                int Bill = Integer.valueOf(billInput);
+                tvTotalBill.setText("Total Bill: "+Bill);
+                // Take pax input and display split bill
+                String paxInput = etPaxInput.getText().toString();
+                int Pax = Integer.valueOf(paxInput);
+                int costPerPax = Bill/Pax;
+                tvSplitCost.setText(String.format("Each Pays: %.2f",costPerPax));
+            }
+        });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set bill, pax and discount input to 0
+                etBillInput.setText(0);
+                etPaxInput.setText(0);
+                etDiscountInput.setText(0);
+                // Set toggle buttons back to default
+                tbGST.setChecked(true);
+                tbSVS.setChecked(true);
+                // Reset payment radio button
+                rgPayment.setActivated(false);
+            }
+        });
     }
 }
